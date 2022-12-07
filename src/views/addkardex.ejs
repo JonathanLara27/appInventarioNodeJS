@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('partials/nav') %>
+    </header>
+    <main>
+        <div class="container">
+            <!--Formulario para ingresar kardex-->
+            <form action="/addkardex" method="POST" class="needs-validation mt-5" novalidate>
+                <section class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Formulario de ingreso de operaciones</h2>
+                        <div class="row justify-content-evenly">
+                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 m-lg-3 mb-3 mt-3">
+                                <label for="fecha" class="form-label">Fecha de operación</label>
+                                <input type="date" name="fecha" id="fecha" class="form-control" required>
+                                <div class="valid-feedback">
+                                    Ingreso correcto
+                                </div>
+                                <div class="invalid-feedback">
+                                    Ingresa La fecha de la operación
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 m-lg-3 mb-3 mt-3">
+                                <label for="operacion" class="form-label">Operación</label>
+                                <select class="form-select" id="operacion" name="operacion" required>
+                                    <option value="Ingreso">Ingreso</option>
+                                    <option value="Salida">Salida</option>
+                                </select>
+                                <div class="valid-feedback">
+                                    Ingreso correcto
+                                </div>
+                                <div class="invalid-feedback">
+                                    Ingresa la operación
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 m-lg-3 mb-3 mt-3">
+                                <label for="producto" class="form-label">Producto</label>
+                                <select class="form-select" name="producto" id="producto" required>
+                                    <!--bucle para productos-->
+                                    <% productos.forEach(product=> { %>
+                                        <option value="<%= product.nombre %>">
+                                            <%= product.nombre %>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                                <div class="valid-feedback">
+                                    Ingreso correcto
+                                </div>
+                                <div class="invalid-feedback">
+                                    Ingresa el producto
+                                </div>
+                            </div>
+                            <!--cantidad-->
+                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 m-lg-3 mb-3 mt-3">
+                                <label for="cantidad" class="form-label">Cantidad</label>
+                                <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad"
+                                    class="form-control" required>
+                                <div class="valid-feedback">
+                                    Ingreso correcto
+                                </div>
+                                <div class="invalid-feedback">
+                                    Ingresa la cantidad
+                                </div>
+                            </div>
+                            <!--precio unitario-->
+                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 m-lg-3 mb-3 mt-3">
+                                <label for="precio" class="form-label">Precio Unitario</label>
+                                <input type="number" name="precioUnitario" id="precioUnitario" placeholder="Precio unitario"
+                                    class="form-control" step="0.01" required>
+                                <div class="valid-feedback">
+                                    Ingreso correcto
+                                </div>
+                                <div class="invalid-feedback">
+                                    Ingresa el precio unitario
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container text-center d-block mt-3 mb-3 ">
+                        <p class="btn btn-dark" id="mostrar"> <i class="bi bi-save"></i> Enviar operación</p>
+                    </div>
+                    <div class="container text-center mt-3 mb-3 ">
+                        <p class="text-bg-danger" id="mensaje" hidden>¿Estás seguro que desear guardar esta operación? No la podrás borrar</p>
+                        <p class="text-bg-danger" id="mensaje2" hidden>Última oportunidad para que verifiques si los datos están correctos</p>
+                    </div>
+                    <div class="container text-center d-block mt-3 mb-3 ">
+                        <button type="submit" class="btn btn-dark" id="guardar" hidden> <i class="bi bi-save"></i> Enviar operación</button>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+    <script>
+        /*=============================================
+    VALIDAR FORMULARIO
+    =============================================*/
+
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Get the forms we want to add validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+    <script>
+        //obtenemos el boton con id mostrar
+        var mostrar = document.getElementById("mostrar");
+        //obtenemos el boton con id guardar
+        var guardar = document.getElementById("guardar");
+        //obtenemos el parrafo con id mensaje
+        var mensaje = document.getElementById("mensaje");
+        var mensaje2 = document.getElementById("mensaje2");
+        //evento click del boton mostrar
+        mostrar.addEventListener("click", function(){
+            //mostramos el mensaje
+            mensaje.hidden = false;
+            mensaje2.hidden = false;    
+            //mostramos el boton guardar quitando el hidden
+            guardar.hidden = false;
+            //ocultamos el boton mostrar
+            mostrar.style.display = "none";
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<% if (!user) { %>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand mb-0 h1">App Inventario</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <% } else { %>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand mb-0 h1">App Inventario</a>
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/products">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/kardex">Kardex</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/profile">Mi perfil</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <a class="btn btn-warning" href="/logout"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <% } %>
+
+<%if (signinMessage.length>0) {%>
+    <div class="alert alert-danger mt-2">
+        <%= signinMessage %>
+    </div>
+    <% } %>
+<%if (signupMessage.length>0) {%>
+    <div class="alert alert-danger mt-2">
+        <%= signupMessage %>
+    </div>
+<% } %>
+<%if (productoGuardado.length>0) {%>
+    <div class="alert alert-success mt-2">
+        <%= productoGuardado %>
+    </div>
+<% } %>
+<%if (errorGuardarProducto.length>0) {%>
+    <div class="alert alert-danger mt-2">
+        <%= errorGuardarProducto %>
+    </div>
+<% } %>
+<%if (productoEliminado.length>0) {%>
+    <div class="alert alert-success mt-2">
+        <%= productoEliminado %>
+    </div>
+<% } %>
+<%if (productoActualizado.length>0) {%>
+    <div class="alert alert-success mt-2">
+        <%= productoActualizado %>
+    </div>
+<% } %>
+<%if (errorActualizarProducto.length>0) {%>
+    <div class="alert alert-danger mt-2">
+        <%= errorActualizarProducto %>
+    </div>
+<% } %>
+<%if (errorEliminarProducto.length>0) {%>
+    <div class="alert alert-danger mt-2">
+        <%= errorEliminarProducto %>
+    </div>
+<% } %>
+<!--Kardex-->
+<%if (kardexGuardado.length>0) {%>
+    <div class="alert alert-success mt-2">
+        <%= kardexGuardado %>
+    </div>
+<% } %>
+<%if (errorGuardarKardex.length>0) {%>
+    <div class="alert alert-danger mt-2">
+        <%= errorGuardarKardex %>
+    </div>
+<% } %>
+<%if (errorMostrarKardex.length>0) {%>
+    <div class="alert alert-danger mt-2">
+        <%= errorMostrarKardex %>
+    </div>
+<% } %>
+
+

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Kardex</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('partials/nav') %>
+    </header>
+    <main>
+
+        <div class="container">
+            <h2 class="text-center">Vista de kardex</h2>
+            <div class="text-center mt-3 mb-3">
+                <a href="/addkardex" class="btn btn-dark"><i class="bi bi-badge-ad"></i> Agregar Operacion kardex </a>
+            </div>
+            <!--Tabla de kardex-->
+            <!-- Se tiene que hacer un bucle para cada producto-->
+            <section class="container mt-5 mb-5">
+                <!--Bucle para kardex-->
+                <% productosKardex.forEach(productoKardex=> { %>
+                    <h2 class="card-title mt-2 mb-2">
+                        <%= productoKardex.producto %>
+                    </h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Operación</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Precio unitario</th>
+                                    <th scope="col">Costo Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% productoKardex.kardexs.forEach(kardex=> { %>
+                                    <tr>
+                                        <td class="table-info">
+                                            <%= kardex.fecha %>
+                                        </td>
+                                        <td class="table-info">
+                                            <%= kardex.operacion %>
+                                        </td>
+                                        <td class="table-info">
+                                            <%= kardex.cantidad %>
+                                        </td>
+                                        <td class="table-info">
+                                            <%= kardex.precioUnitario %>
+                                        </td>
+                                        <td class="table-info">
+                                            <%= kardex.precioTotal %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text"> <b>INVENTARIO</b> : <%= productoKardex.stock %>
+                                </p>
+                            </div>
+                        </div>
+                        <% }) %>
+            </section>
+
+
+        </div>
+    </main>
+    <footer>
+        <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+
+</body>
+
+</html>
