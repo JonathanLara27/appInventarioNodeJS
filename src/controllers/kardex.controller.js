@@ -105,6 +105,9 @@ var controller={
                 var dia=fecha.getDate();
                 var mes=fecha.getMonth()+1;
                 var anio=fecha.getFullYear();
+                //si el dia es menor a 10 le agregamos un cero al igual que al mes
+                if(dia<10) dia='0'+dia;
+                if(mes<10) mes='0'+mes;
                 var fechaFormateada=dia+'/'+mes+'/'+anio;
                 //cambiar fecha a string
                 kardexs[i]=kardexs[i].toObject();
@@ -134,11 +137,24 @@ var controller={
                     }
                 }
             }
-            //ordenamos por fecha de menor a mayor
+            //ordenamos por fecha de menor a mayor con ordenamiento burbuja
             for(var i=0;i<productosKardex.length;i++){
-                productosKardex[i].kardexs.sort(function(a,b){
-                    return new Date(a.fecha) - new Date(b.fecha);
-                });
+                for(var j=0;j<productosKardex[i].kardexs.length;j++){
+                    for(var k=0;k<productosKardex[i].kardexs.length-1;k++){
+                        if((productosKardex[i].kardexs[k].fecha)>productosKardex[i].kardexs[k+1].fecha){
+                            var aux=productosKardex[i].kardexs[k];
+                            productosKardex[i].kardexs[k]=productosKardex[i].kardexs[k+1];
+                            productosKardex[i].kardexs[k+1]=aux;
+                        }
+                    }
+                }
+            }
+            //imprimimos los kardexs
+            for(var i=0;i<productosKardex.length;i++){
+                console.log('Producto: '+productosKardex[i].producto);
+                for(var j=0;j<productosKardex[i].kardexs.length;j++){
+                    console.log('Fecha: '+productosKardex[i].kardexs[j].fecha);
+                }
             }
             res.render('kardex',{kardexs: kardexs, productosKardex: productosKardex});
         });
